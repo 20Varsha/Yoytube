@@ -1,0 +1,273 @@
+swagger: "2.0"
+info:
+  title: Missedcall API
+  description: This is my company API Documentation
+  version: 1.0
+  contact:
+    email: anandhansuneev0704@gmail.com
+  liscence:
+    name: Apache 2.0
+    url: "http://www.apache.org/liscences/LIS"
+  servers:
+    -url: http://localhost:3000
+    description: THis is my local Server
+    -url: http://example.com/
+    description: This is my original URL
+schemes: [http]
+
+
+#Return Users From get request
+paths:
+  # /string:
+  #   get:
+  #     summary: Returns a string.
+  #     description: String Chechup
+  #     responses:
+  #       200:    # status code
+  #         description: Successul Response
+  #         schema: 
+  #           type: string
+  #           example: "Users String"
+  #       400:
+  #         description: User Error
+  #         schema: 
+  #           type: string
+  #           example: "Some Error "
+
+#Returns a User
+  # /user:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: People Who are already registered
+  #     responses:
+  #       200:    # status code
+  #         description: Successul Response
+  #         schema: 
+  #           type: object
+  #           properties:
+  #             id:
+  #               type: integer
+  #             name:
+  #               type: string
+
+#Returns an array of Users
+  /user:
+    get:
+      summary: Returns a list of users.
+      description: People Who are already registered
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+
+
+#Get Request with path id
+  # /user/{userId}:
+  #   get:
+  #     summary: Returns a user by ID.
+  #     description: Returns the Specific User
+  #     parameters:
+  #       - name: userId
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type : integer
+  #           format: int64
+  #     responses: 
+  #       '200':
+  #         description: OK
+  #         schema:
+  #           type: object
+  #           example: {name: syed}
+
+#Returns an array of Organization
+  /organization:
+    get:
+      summary: Returns a list of Organization.
+      description: Organization already registered
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+
+#Returns an array of Accesskey
+  /accesskey:
+    get:
+      summary: Returns a list of accessket.
+      description: Created accesskey.
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                key:
+                  type: string
+
+#Post json/body & Body required
+  # /create:
+  #   post:
+  #     summary: Adds an organization
+  #     produces:
+  #       - application/json
+  #     consumes:
+  #       - application/json
+  #     parameters:
+  #       - in: body
+  #         name: body
+  #         email: body
+  #         address: body
+  #         schema:
+  #           type: object
+  #           required:
+  #             - name
+  #             - email
+  #             - address
+  #             - id
+  #           properties:
+  #             id:
+  #               type: integer
+  #             name:
+  #               type: string
+  #     responses:
+  #       '200':
+  #         description: OK
+
+
+#Defining Body Reference
+  /create:
+    post:
+      summary: Add an organization
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          email: body
+          address: body
+          schema:
+           $ref: "#/model/schemas/User"
+      responses:
+        '200':
+          description: OK
+
+
+#Query
+#Get Query
+  # /usersQuery:
+  #   get:
+  #     summary: Returns a user by ID.
+  #     description: Returns the Specific User
+  #     parameters:
+  #       - in: query
+  #         name: id
+  #         type: integer
+  #         enum: [1, 2]
+  #         required: true
+  #       # - in: query
+  #       #   name: id
+  #       #   type: integer
+  #       #   enum: [1, 2]
+  #       #   required: true
+  #     responses: 
+  #       '200':
+  #         description: OK
+  #         schema:
+  #           type: object
+  #           example: {name: syed,id: 21}
+
+
+
+#File Upload Multiform Data
+#   /upload:
+#     post:
+#       tags:
+#         - Upload
+#       summary: Upload Video/Image for Inferring
+#       consumes:
+#         - multipart/form-data
+#       parameters:
+#         - in: formData
+#           name: file
+#           type: file
+#           required: true
+#           description: The file to upload.
+#         # - in: formData
+#         #   name: app
+#         #   type: string
+#         #   required: true
+#         #   description: Name of the model.
+#         # - in: formData
+#         #   name: id
+#         #   type: string
+#         #   required: true
+#         #   description: Some random Id.
+#       responses:
+#         200:
+#           description: Successful Response
+#         400:
+#           description: User Error
+#         500:
+#           description: Internal Server Error
+
+
+#In Headers
+  /health:
+    get:
+      summary: Checks if the server is alive
+      parameters:
+        - in: header         
+          schema:
+            type: string            
+      responses:
+        200:
+          description: Successful Response
+        400:
+          description: Server Error
+        500:
+          description: Internal Server Error
+
+
+components:
+  schemas:
+    Organization:
+      type: object
+      required:
+        - name
+        - email
+        - address
+        - id
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+
+
+
